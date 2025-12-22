@@ -1,6 +1,10 @@
 import { Box, styled, Typography } from "@mui/material";
 import { NavLink, Outlet } from "react-router";
 import HomeIcon from "@mui/icons-material/Home";
+import SearchIcon from "@mui/icons-material/Search";
+import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
+import LibraryHead from "./components/LibraryHead";
+import Library from "./components/Library";
 
 const Layout = styled("div")({
   display: "flex",
@@ -19,19 +23,22 @@ const SideBar = styled("div")(({ theme }) => ({
 }));
 
 const ContentBox = styled(Box)(({ theme }) => ({
-  borderRadius: "8px",
+  borderRadius: "16px",
   backgroundColor: theme.palette.background.paper,
   color: theme.palette.text.primary,
   width: "100%",
-  padding: "8px",
-  marginBottom: "8px",
-  marginRight: "8px",
+  padding: "20px",
+  marginBottom: "20px",
+  marginRight: "20px",
 }));
 
 const NavList = styled("ul")(({ theme }) => ({
   listStyle: "none",
   padding: "0",
   margin: "0",
+  display: "flex",
+  flexDirection: "column",
+  gap: "16px",
 }));
 
 const StyledNavLink = styled(NavLink)(({ theme }) => ({
@@ -60,8 +67,16 @@ const AppLayout = () => {
                 Home
               </Typography>
             </StyledNavLink>
-            <StyledNavLink to="/search">Search</StyledNavLink>
+            <StyledNavLink to="/search">
+              <SearchIcon />
+              <Typography variant="h2" fontWeight={700}>
+                Search
+              </Typography>
+            </StyledNavLink>
           </NavList>
+        </ContentBox>
+        <ContentBox>
+          <Library />
         </ContentBox>
       </SideBar>
       <Outlet />
