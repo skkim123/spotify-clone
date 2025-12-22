@@ -2,8 +2,6 @@ import { Box, styled, Typography } from "@mui/material";
 import { NavLink, Outlet } from "react-router";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
-import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
-import LibraryHead from "./components/LibraryHead";
 import Library from "./components/Library";
 
 const Layout = styled("div")({
@@ -32,14 +30,14 @@ const ContentBox = styled(Box)(({ theme }) => ({
   marginRight: "20px",
 }));
 
-const NavList = styled("ul")(({ theme }) => ({
+const NavList = styled("ul")({
   listStyle: "none",
   padding: "0",
   margin: "0",
   display: "flex",
   flexDirection: "column",
   gap: "16px",
-}));
+});
 
 const StyledNavLink = styled(NavLink)(({ theme }) => ({
   textDecoration: "none",

@@ -1,13 +1,13 @@
 import { Box, Button, styled, Typography } from "@mui/material";
 
-const EmptyPlaylistBox = styled(Box)(({ theme }) => ({
+const EmptyPlaylistBox = styled(Box)({
   backgroundColor: "#242424",
   borderRadius: "8px",
   padding: "20px",
   display: "flex",
   flexDirection: "column",
   gap: "16px",
-}));
+});
 
 const CreatePlaylistButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.secondary.main,

@@ -4,11 +4,11 @@ import { Box } from "@mui/system";
 import AddIcon from "@mui/icons-material/Add";
 import { styled } from "@mui/material/styles";
 
-const LibraryBox = styled(Box)(({ theme }) => ({
+const LibraryBox = styled(Box)({
   display: "flex",
   alignItems: "center",
   gap: "24px",
-}));
+});
 
 const PlusButton = styled(AddIcon)(({ theme }) => ({
   color: theme.palette.primary.main,
