@@ -3,6 +3,7 @@ import { NavLink, Outlet } from "react-router";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
 import Library from "./components/Library";
+import Navbar from "./components/Navbar";
 
 const Layout = styled("div")({
   display: "flex",
@@ -73,11 +74,14 @@ const AppLayout = () => {
             </StyledNavLink>
           </NavList>
         </ContentBox>
-        <ContentBox>
+        <ContentBox height="100%">
           <Library />
         </ContentBox>
       </SideBar>
-      <Outlet />
+      <ContentBox>
+        <Navbar />
+        <Outlet />
+      </ContentBox>
     </Layout>
   );
 };
