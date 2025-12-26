@@ -7,7 +7,7 @@ interface CardProps {
   artistName?: string;
 }
 
-const CardContainer = styled(Box)(({ theme }) => ({
+const CardContainer = styled(Box)(() => ({
   cursor: "pointer",
   "&:hover .play-button": {
     opacity: 1,
