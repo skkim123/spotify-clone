@@ -12,11 +12,6 @@ const CardContainer = styled(Box)(({ theme }) => ({
   "&:hover .play-button": {
     opacity: 1,
   },
-  [theme.breakpoints.down("sm")]: {
-    "& .play-button": {
-      opacity: 1,
-    },
-  },
 }));
 
 const ImageWrapper = styled(Box)({
