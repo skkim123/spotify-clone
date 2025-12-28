@@ -1,8 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import { exchangeToken } from "../apis/authApi";
 import type { ExchangeTokenResponse } from "../models/auth";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const useExchangeToken = () => {
+  const queryClient = useQueryClient();
+
   return useMutation<
     ExchangeTokenResponse,
     Error,
@@ -22,6 +25,9 @@ export const useExchangeToken = () => {
     },
     onSuccess: (data) => {
       localStorage.setItem("access_token", data.access_token);
+      queryClient.invalidateQueries({
+        queryKey: ["current-user-profile"],
+      });
     },
     onError: (error) => {
       console.log(error);
