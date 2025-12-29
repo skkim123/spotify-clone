@@ -2,6 +2,7 @@ import LibraryHead from "./LibraryHead";
 import EmptyPlaylist from "./EmptyPlaylist";
 import styled from "@emotion/styled";
 import { useGetCurrentUserPlaylists } from "../../hooks/useGetCurrentUserPlaylists";
+import UserPlaylist from "./UserPlaylist";
 
 const LibraryBox = styled("div")({
   display: "flex",
@@ -15,10 +16,12 @@ const Library = () => {
     offset: 0,
   });
 
+  const userPlaylistExists = !!data && data?.items.length > 0;
+
   return (
     <LibraryBox>
       <LibraryHead />
-      <EmptyPlaylist />
+      {userPlaylistExists ? <UserPlaylist /> : <EmptyPlaylist />}
     </LibraryBox>
   );
 };

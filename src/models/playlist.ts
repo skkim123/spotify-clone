@@ -8,7 +8,7 @@ export interface GetCurrentUserPlaylistsRequest {
 }
 
 // interface 못 씀
-export type GetCurrentUserPlaylistsResponse = ApiResponse<SimplifiedPlaylist[]>;
+export type GetCurrentUserPlaylistsResponse = ApiResponse<SimplifiedPlaylist>;
 
 export interface SimplifiedPlaylist {
   collaborative?: boolean;
