@@ -47,7 +47,7 @@ import type { Artist } from "./artist";
 import type { ExternalUrls, Image, Restriction } from "./commonType";
 
 export interface GetNewReleasesResponse {
-  albums: ApiResponse<SimplifiedAlbum[]>;
+  albums: ApiResponse<SimplifiedAlbum>;
 }
 
 export interface SimplifiedAlbum {
