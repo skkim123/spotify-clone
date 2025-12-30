@@ -1,10 +1,12 @@
 import type {
   GetCurrentUserPlaylistsRequest,
   GetCurrentUserPlaylistsResponse,
+  GetPlaylistRequest,
+  GetPlaylistResponse,
 } from "../models/playlist";
 import api from "../utils/api";
 
-const getCurrentUserPlaylists = async ({
+export const getCurrentUserPlaylists = async ({
   limit,
   offset,
 }: GetCurrentUserPlaylistsRequest): Promise<GetCurrentUserPlaylistsResponse> => {
@@ -21,4 +23,22 @@ const getCurrentUserPlaylists = async ({
   }
 };
 
-export default getCurrentUserPlaylists;
+export const getPlaylist = async ({
+  playlist_id: playlistId,
+  market,
+  fieids,
+  additional_types,
+}: GetPlaylistRequest): Promise<GetPlaylistResponse> => {
+  try {
+    const response = await api.get(`/playlists/${playlistId}`, {
+      params: {
+        market,
+        fieids,
+        additional_types,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to get playlist");
+  }
+};

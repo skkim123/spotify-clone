@@ -6,6 +6,7 @@ import type { SimplifiedPlaylist } from "../../models/playlist";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState, useRef } from "react";
 import LoadingSpinner from "../../common/components/LoadingSpinner";
+import { useNavigate } from "react-router";
 
 const LibraryBox = styled(Box)({
   display: "flex",
@@ -19,6 +20,11 @@ const PlaylistContainer = styled(Box)({
   gap: "4px",
   overflowY: "auto",
   maxHeight: "calc(100vh - 300px)",
+  scrollbarWidth: "none", // Firefox
+  msOverflowStyle: "none", // IE
+  "&::-webkit-scrollbar": {
+    display: "none", // Chrome, Safari, Edge
+  },
 });
 
 const PlaylistItem = styled(Box)({
@@ -55,11 +61,12 @@ const PlaylistInfo = styled(Box)({
 
 interface PlaylistProps {
   playlist: SimplifiedPlaylist;
+  handleClick: (id: string) => void;
 }
 
-const Playlist = ({ playlist }: PlaylistProps) => {
+const Playlist = ({ playlist, handleClick }: PlaylistProps) => {
   return (
-    <PlaylistItem>
+    <PlaylistItem onClick={() => handleClick(playlist.id)}>
       {playlist.images && playlist.images.length > 0 ? (
         <PlaylistImage src={playlist.images[0].url} alt={playlist.name} />
       ) : (
@@ -102,6 +109,12 @@ const Library = () => {
     prevInView.current = inView;
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+  const navigate = useNavigate();
+
+  const handleClick = (id: string) => {
+    navigate(`/playlist/${id}`);
+  };
+
   return (
     <LibraryBox>
       <LibraryHead />
@@ -110,7 +123,11 @@ const Library = () => {
           {data.pages
             .flatMap((page) => page.items)
             .map((playlist) => (
-              <Playlist key={playlist.id} playlist={playlist} />
+              <Playlist
+                key={playlist.id}
+                playlist={playlist}
+                handleClick={() => handleClick(playlist.id)}
+              />
             ))}
           <div ref={ref}>
             {isFetchingNextPage ? (
