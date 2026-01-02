@@ -1,7 +1,14 @@
 import type { ApiResponse } from "./apiResponse";
-import type { ExternalUrls, Followers, Image, Owner } from "./commonType";
+import type {
+  ExternalUrls,
+  Followers,
+  Image,
+  Owner,
+  Restriction,
+} from "./commonType";
 import type { Artist } from "./artist";
 import type { SimplifiedAlbum } from "./album";
+import type { Episode, Track } from "./track";
 
 export interface GetCurrentUserPlaylistsRequest {
   limit?: number;
@@ -70,29 +77,23 @@ export interface PlaylistTrackItem {
   track: Track;
 }
 
-export interface Track {
-  album: SimplifiedAlbum;
-  artists: Artist[];
-  available_markets: string[];
-  disc_number: number;
-  duration_ms: number;
-  explicit: boolean;
-  external_ids: ExternalIds;
-  external_urls: ExternalUrls;
-  href: string;
-  id: string;
-  is_playable?: boolean;
-  name: string;
-  popularity: number;
-  preview_url: string | null;
-  track_number: number;
-  type: string;
-  uri: string;
-  is_local: boolean;
+export interface GetPlaylistItemsRequest extends GetPlaylistRequest {
+  offset?: number;
+  limit?: number;
 }
 
-export interface ExternalIds {
-  isrc?: string;
-  ean?: string;
-  upc?: string;
+export interface PlaylistTrack {
+  added_at?: string | null;
+  added_by?: {
+    external_urls: ExternalUrls;
+    followers?: Followers;
+    href?: string;
+    id: string;
+    type?: string;
+    uri?: string;
+  } | null;
+  is_local: boolean;
+  track: Track | Episode;
 }
+
+export type GetPlaylistItemsResponse = ApiResponse<PlaylistTrack>;

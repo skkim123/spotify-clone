@@ -1,0 +1,26 @@
+import { useInfiniteQuery } from "@tanstack/react-query";
+import type { GetPlaylistItemsRequest } from "../models/playlist";
+import { getPlaylistItems } from "../apis/playlistApi";
+
+const useGetPlaylistItems = (params: GetPlaylistItemsRequest) => {
+  return useInfiniteQuery({
+    queryKey: ["playlist-items", params],
+    queryFn: ({ pageParam }) => {
+      return getPlaylistItems({
+        ...params,
+        offset: pageParam,
+      });
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage): number | undefined => {
+      if (lastPage.next) {
+        const url = new URL(lastPage.next);
+        const nextOffset = url.searchParams.get("offset");
+        return nextOffset ? parseInt(nextOffset) : undefined;
+      }
+      return undefined;
+    },
+  });
+};
+
+export default useGetPlaylistItems;

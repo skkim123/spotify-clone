@@ -1,6 +1,18 @@
 import useGetPlaylist from "../../hooks/useGetPlaylist";
 import { Navigate, useParams } from "react-router";
-import { Box, Typography, styled } from "@mui/material";
+import {
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+  styled,
+} from "@mui/material";
+import useGetPlaylistItems from "../../hooks/useGetPlaylistItems";
+import DesktopPlaylistItem from "./components/DesktopPlaylistItem";
+import { PAGE_LIMIT } from "../../configs/commonConfig";
 
 const HeaderContainer = styled(Box)({
   display: "flex",
@@ -29,6 +41,16 @@ const PlaylistDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   if (!id) return <Navigate to="/" />;
   const { data: playlist } = useGetPlaylist({ playlist_id: id });
+  const {
+    data: playlistItems,
+    isLoading: isPlaylistItemsLoading,
+    error: playlistItemsLoading,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useGetPlaylistItems({ playlist_id: id, limit: PAGE_LIMIT });
+
+  console.log("playlistItems", playlistItems);
 
   if (!playlist) return null;
 
@@ -55,6 +77,32 @@ const PlaylistDetailPage = () => {
           </Typography>
         </Box>
       </HeaderContainer>
+      {playlist.tracks?.total === 0 ? (
+        <Typography>Search for songs</Typography>
+      ) : (
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>#</TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell>Album</TableCell>
+              <TableCell>Date Added</TableCell>
+              <TableCell>Duration</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {playlistItems?.pages.map((page, pageIndex) =>
+              page.items.map((item, index) => (
+                <DesktopPlaylistItem
+                  key={index}
+                  item={item}
+                  index={pageIndex * PAGE_LIMIT + index + 1}
+                />
+              ))
+            )}
+          </TableBody>
+        </Table>
+      )}
     </Box>
   );
 };
